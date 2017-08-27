@@ -301,12 +301,16 @@ new Promise(resolve => {
   var cyc_elements = [];
   [].forEach.call(document.getElementsByTagName('img'), (element) => {
     var cycimg = element.getAttribute(CYCIMG_ATTRIBUTE_NAME);
-    if (cycimg !== null) {
+    if (element.getAttribute(CYCIMG_ATTRIBUTE_NAME) !== null ||
+        element.getAttribute('alt') === 'cycimg') {
       cyc_elements.push(element);
     }
   });
   cyc_elements.forEach((element) => {
     var cycimg = element.getAttribute(CYCIMG_ATTRIBUTE_NAME);
+    if (cycimg === null) {
+      cycimg = element.src;
+    }
     /** @type {?CSSStyleDeclaration} */
     var style = getComputedStyle(element, '');
     var canvas = /** @type {!HTMLCanvasElement} */
